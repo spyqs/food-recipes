@@ -15,7 +15,7 @@ simplicity:
   difficulty: 1     # 1 (assembly) to 5 (project)
   effort: null      # 1 to 5, how much of a hassle it feels
   active_min: 3
-  total_min: 5
+  total_min: 8
   steps: 3
   ingredient_count: 3
 
@@ -40,7 +40,7 @@ ingredients:
 
 ## Steps
 
-1. Microwave the peas for about 2 minutes, until hot, then rinse under cold water and drain well.
+1. Boil the peas in a small pot of water for 2 to 3 minutes, then rinse under cold water and drain well.
 2. Mix the peas with the drained tuna and mayonnaise, lightly mashing some of the peas if you like.
 3. Season with salt and black pepper.
 

@@ -8,6 +8,8 @@ The goal is to make healthy, very simple lunches easy. What matters:
 
 No numeric targets are set yet, so ask rather than assume one.
 
+The kitchen has no microwave, so write recipes for the stove or air fryer.
+
 ## Adding recipes
 
 - Follow `TEMPLATE.md`. File names are kebab-case, in `recipes/`.
