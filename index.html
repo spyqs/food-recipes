@@ -1,0 +1,169 @@
+---
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Menu</title>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --card: #fffdf8;
+    --ink: #24261f;
+    --muted: #6f7165;
+    --line: #e4dfd2;
+    --accent: #3f6b2f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171813;
+      --card: #20221b;
+      --ink: #eeece3;
+      --muted: #a3a597;
+      --line: #35372d;
+      --accent: #9ccb7f;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .menu {
+    display: flex;
+    height: 100dvh;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .menu::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    overflow-y: auto;
+  }
+  .recipe {
+    max-width: 480px;
+    min-height: 100%;
+    margin: 0 auto;
+    padding-bottom: 56px;
+    background: var(--card);
+  }
+  .photo { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .content { padding: 20px 16px 0; }
+  h1 { font-size: 26px; line-height: 1.2; }
+  .stats { display: flex; gap: 8px; margin-top: 16px; }
+  .stat {
+    flex: 1;
+    padding: 10px 4px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .stat b { display: block; font-size: 22px; line-height: 1.2; color: var(--accent); }
+  .stat span { font-size: 13px; color: var(--muted); }
+  .facts { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  h2 { margin-top: 24px; font-size: 18px; }
+  ul, ol { margin-top: 6px; padding-left: 22px; }
+  li + li { margin-top: 4px; }
+  .note { color: var(--muted); }
+  .body p { margin-top: 6px; }
+  .body p:has(img) { display: none; }
+  .dots {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    left: 50%;
+    display: flex;
+    gap: 2px;
+    padding: 2px 6px;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+  }
+  .dots:empty { display: none; }
+  .dots button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .dots button::before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin: auto;
+    background: var(--line);
+    border-radius: 50%;
+  }
+  .dots button[aria-current="true"]::before { background: var(--accent); }
+</style>
+</head>
+<body>
+<main class="menu" id="menu">
+  {% assign recipes = site.pages | where_exp: "p", "p.path contains 'recipes/'" | sort: "title" %}
+  {% for r in recipes %}
+  {% assign slug = r.name | replace: ".md", "" %}
+  {% assign photo = "/images/" | append: slug | append: ".jpg" %}
+  {% assign has_photo = site.static_files | where: "path", photo | size %}
+  <section class="slide">
+    <article class="recipe">
+      {% if has_photo > 0 %}<img class="photo" src="images/{{ slug }}.jpg" alt="{{ r.title | escape }}">{% endif %}
+      <div class="content">
+        <h1>{{ r.title | escape }}</h1>
+        <div class="stats">
+          <div class="stat"><b>{{ r.nutrition.calories }}</b><span>calories</span></div>
+          <div class="stat"><b>{{ r.nutrition.protein_g }}g</b><span>protein</span></div>
+          <div class="stat"><b>{{ r.nutrition.fiber_g }}g</b><span>fiber</span></div>
+        </div>
+        <p class="facts">
+          {{ r.simplicity.total_min }} min
+          {% if r.simplicity.effort %}· Effort {{ r.simplicity.effort }}/5{% endif %}
+          {% if r.flavor %}· Flavor {{ r.flavor }}/5{% endif %}
+        </p>
+        <h2>Ingredients</h2>
+        <ul>
+          {% for i in r.ingredients %}
+          <li>{{ i.amount }} {{ i.unit }} {{ i.name | escape }}{% if i.note %} <span class="note">({{ i.note | escape }})</span>{% endif %}</li>
+          {% endfor %}
+        </ul>
+        <div class="body">{{ r.content | markdownify }}</div>
+      </div>
+    </article>
+  </section>
+  {% endfor %}
+</main>
+<nav class="dots" id="dots" aria-label="Recipes"></nav>
+<script>
+  const menu = document.getElementById("menu");
+  const dots = document.getElementById("dots");
+  const slides = [...menu.children];
+  const go = (i) => slides[i]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  const current = () => Math.round(menu.scrollLeft / menu.clientWidth);
+
+  if (slides.length > 1) {
+    slides.forEach((slide, i) => {
+      const dot = document.createElement("button");
+      dot.setAttribute("aria-label", `Recipe ${i + 1} of ${slides.length}`);
+      dot.onclick = () => go(i);
+      dots.append(dot);
+    });
+    const mark = () => [...dots.children].forEach((d, i) => d.setAttribute("aria-current", i === current()));
+    menu.addEventListener("scroll", mark, { passive: true });
+    mark();
+  }
+
+  addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") go(current() + 1);
+    if (e.key === "ArrowLeft") go(current() - 1);
+  });
+</script>
+</body>
+</html>

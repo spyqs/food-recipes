@@ -1,0 +1,5 @@
+title: Menu
+exclude:
+  - README.md
+  - CLAUDE.md
+  - TEMPLATE.md

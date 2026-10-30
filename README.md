@@ -2,6 +2,8 @@
 
 Healthy, very simple lunches. Each recipe is one markdown file in `recipes/`, with structured info in the frontmatter and the instructions below it.
 
+Swipe through the menu at **https://spyqs.github.io/food-recipes/**. Any recipe pushed to `main` shows up there automatically.
+
 ## What gets tracked
 
 - **Nutrition:** calories, protein and fiber, plus carbs and fat
