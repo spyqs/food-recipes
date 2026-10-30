@@ -54,6 +54,8 @@
     background: var(--card);
   }
   .photo { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .placeholder { display: grid; place-items: center; background: var(--line); color: var(--muted); }
+  .placeholder svg { width: 96px; height: 96px; }
   .content { padding: 20px 16px 0; }
   h1 { font-size: 26px; line-height: 1.2; }
   .stats { display: flex; gap: 8px; margin-top: 16px; }
@@ -115,7 +117,8 @@
   {% assign has_photo = site.static_files | where: "path", photo | size %}
   <section class="slide">
     <article class="recipe">
-      {% if has_photo > 0 %}<img class="photo" src="images/{{ slug }}.jpg" alt="{{ r.title | escape }}">{% endif %}
+      {% if has_photo > 0 %}<img class="photo" src="images/{{ slug }}.jpg" alt="{{ r.title | escape }}">
+      {% else %}<div class="photo placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><circle cx="13.5" cy="12" r="7.5"/><circle cx="13.5" cy="12" r="4"/><path d="M3 4v5a1.5 1.5 0 0 0 3 0V4M4.5 4v16"/></svg></div>{% endif %}
       <div class="content">
         <h1>{{ r.title | escape }}</h1>
         <div class="stats">
