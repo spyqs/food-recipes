@@ -13,13 +13,13 @@ nutrition_source: USDA figures for frozen green beans, cooked lentils and sardin
 
 simplicity:
   difficulty: 1     # 1 (assembly) to 5 (project)
-  effort: null      # 1 to 5, how much of a hassle it feels
+  effort: 2         # 1 to 5, how much of a hassle it feels
   active_min: 3
   total_min: 15
   steps: 3
   ingredient_count: 3
 
-flavor: null        # 1 to 5, set after eating
+flavor: 3           # 1 to 5, set after eating
 tags: [high-protein, high-fiber, air-fryer, no-chop]
 
 ingredients:
