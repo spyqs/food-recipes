@@ -41,6 +41,8 @@ ingredients:
     note: or a precooked pouch
 ---
 
+![Green beans, sardines and lentils](../images/green-beans-sardines-lentils.jpg)
+
 ## Steps
 
 1. Air fry the frozen green beans at 400°F for 12 minutes, shaking halfway. Give them a few more minutes if you want more browning.
