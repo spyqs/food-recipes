@@ -4,10 +4,10 @@ meal: lunch
 servings: 1
 
 nutrition:          # per serving, estimated
-  calories: 340
-  protein_g: 31
-  fiber_g: 12
-  carbs_g: 34
+  calories: 250
+  protein_g: 27
+  fiber_g: 6
+  carbs_g: 17
   fat_g: 11
 nutrition_source: USDA figures for frozen green beans and for sardines in oil, drained
 
@@ -20,14 +20,14 @@ simplicity:
   ingredient_count: 2
 
 flavor: null        # 1 to 5, set after eating
-tags: [high-protein, high-fiber, air-fryer, no-chop]
+tags: [high-protein, air-fryer, no-chop]
 
 ingredients:
   - name: frozen green beans
-    amount: 16
+    amount: 8
     unit: oz
     aisle: frozen
-    note: one 16 oz bag
+    note: half of a 16 oz bag
   - name: sardines
     amount: 1
     unit: tin
