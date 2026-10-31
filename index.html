@@ -111,6 +111,14 @@
 <body>
 <main class="menu" id="menu">
   {% assign recipes = site.pages | where_exp: "p", "p.path contains 'recipes/'" | sort: "title" %}
+  {% assign with_photo = "" | split: "" %}
+  {% assign without_photo = "" | split: "" %}
+  {% for r in recipes %}
+  {% assign photo = "/images/" | append: r.name | replace: ".md", ".jpg" %}
+  {% assign has_photo = site.static_files | where: "path", photo | size %}
+  {% if has_photo > 0 %}{% assign with_photo = with_photo | push: r %}{% else %}{% assign without_photo = without_photo | push: r %}{% endif %}
+  {% endfor %}
+  {% assign recipes = with_photo | concat: without_photo %}
   {% for r in recipes %}
   {% assign slug = r.name | replace: ".md", "" %}
   {% assign photo = "/images/" | append: slug | append: ".jpg" %}
